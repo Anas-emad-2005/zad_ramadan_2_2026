@@ -131,11 +131,15 @@ function getLevel(points) {
 /*
  * Challenge configuration
  *
- * The Ramadan challenge runs for a fixed 31‑day window and ends on
- * 20‑03‑2026.  After this date the user should no longer be able to
- * complete tasks or earn additional points.  The tasks section will
- * display a celebratory message instead of action buttons.  Streaks
- * and existing points remain visible for historical interest.
+ * The Ramadan challenge runs over the month of Ramadan.  It ends at
+ * midnight on 20‑03‑2026, which means the final active day is
+ * 19‑03‑2026.  This yields a 30‑day challenge window when counting
+ * from the first day of Ramadan (18‑02‑2026).
+ *
+ * After the end date the user can no longer complete tasks or earn
+ * additional points.  The tasks section will display a celebratory
+ * message instead of action buttons.  Streaks and existing points
+ * remain visible for historical interest.
  */
 const CHALLENGE_END_DATE = new Date('2026-03-20');
 // Normalise to midnight so comparisons ignore time of day
@@ -438,8 +442,13 @@ function updateScoreboard(totalPoints) {
     document.getElementById('streak-suffix').textContent =
         streak === 1 ? 'يوم' : (streak <= 10 ? 'أيام' : 'يوماً');
 
-    // Progress bar (cap at 250 for display)
-    const MAX_DISPLAY = 250;
+    // Progress bar (cap at 1000 for display)
+    // To support a longer Ramadan challenge, the progress bar now caps
+    // at 1000 points instead of 250.  This value controls the
+    // percentage calculation for both the bar and the circular
+    // indicator.  If totalPoints exceeds MAX_DISPLAY, the progress
+    // indicator will remain at 100%.
+    const MAX_DISPLAY = 1000;
     const pct = Math.min(100, Math.round((totalPoints / MAX_DISPLAY) * 100));
     const bar = document.getElementById('progress-bar');
     bar.style.width = `${pct}%`;

@@ -125,6 +125,175 @@ const Rewards = (() => {
         </div>
       `,
         },
+        {
+            id: 'reward_300',
+            threshold: 300,
+            title: 'سائر على الدرب 🌱',
+            icon: '🌱',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🌱</div>
+          <h5 class="reward-title-modal mb-2">رائع! لقد بلغت ٣٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "فَاسْتَبِقُوا الْخَيْرَاتِ"
+            <br><small class="text-muted">سورة البقرة – آية ١٤٨</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي التدبّر:</strong><br>
+            خصص وقتاً لقراءة تفسير سورة من القرآن هذا الأسبوع واستمتع بالتدبّر.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_400',
+            threshold: 400,
+            title: 'مصباح الهدى 🪔',
+            icon: '🪔',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🪔</div>
+          <h5 class="reward-title-modal mb-2">ممتاز! لقد بلغت ٤٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "وَمَا تَفْعَلُوا مِنْ خَيْرٍ يَعْلَمْهُ اللَّهُ"
+            <br><small class="text-muted">سورة البقرة – آية ١٩٧</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي الصدقة:</strong><br>
+            شارك بصدقة سرية جديدة على من يحتاج، واجعلها خالصة لوجه الله.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_500',
+            threshold: 500,
+            title: 'نور متزايد 💡',
+            icon: '💡',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">💡</div>
+          <h5 class="reward-title-modal mb-2">أحسنت! لقد بلغت ٥٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "وَمَا عِندَ اللَّهِ خَيْرٌ وَأَبْقَى"
+            <br><small class="text-muted">سورة القصص – آية ٦٠</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي النوافل:</strong><br>
+            احرص على صلاة الضحى يومياً هذا الأسبوع، فهي صدقة عن كل مفصل في جسدك.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_600',
+            threshold: 600,
+            title: 'واحة المؤمن 🌴',
+            icon: '🌴',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🌴</div>
+          <h5 class="reward-title-modal mb-2">ما شاء الله! لقد بلغت ٦٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "سَيَجْزِي اللَّهُ الشَّاكِرِينَ"
+            <br><small class="text-muted">سورة آل عمران – آية ١٤٤</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي الخدمة:</strong><br>
+            خصص وقتاً للتطوع في خدمة المجتمع أو مساعدة جارك، فالأجر عظيم.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_700',
+            threshold: 700,
+            title: 'قمر التهجد 🌜',
+            icon: '🌜',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🌜</div>
+          <h5 class="reward-title-modal mb-2">بارك الله فيك! لقد بلغت ٧٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ"
+            <br><small class="text-muted">سورة البقرة – آية ٢٢٢</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي الاستغفار:</strong><br>
+            جدد التوبة واستغفر الله مئة مرة يومياً، واطلب منه الثبات.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_800',
+            threshold: 800,
+            title: 'قلب مطمئن 🧡',
+            icon: '🧡',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🧡</div>
+          <h5 class="reward-title-modal mb-2">مذهل! لقد بلغت ٨٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "إِنَّ مَعَ الْعُسْرِ يُسْرًا"
+            <br><small class="text-muted">سورة الشرح – آية ٦</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي العطاء:</strong><br>
+            تفقّد جيرانك وأقاربك، واسأل عن حاجتهم وساعدهم بما تستطيع.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_900',
+            threshold: 900,
+            title: 'فجر الأمل 🌄',
+            icon: '🌄',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🌄</div>
+          <h5 class="reward-title-modal mb-2">مبارك! لقد بلغت ٩٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"
+            <br><small class="text-muted">سورة البقرة – آية ١٥٣</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>تحدي الدعاء:</strong><br>
+            حافظ على أذكار الصباح والمساء يومياً، وأكثر من الدعاء للمسلمين في كل سجدة.
+          </p>
+        </div>
+      `,
+        },
+        {
+            id: 'reward_1000',
+            threshold: 1000,
+            title: 'التمام والكمال 🏆',
+            icon: '🏆',
+            content: `
+        <div class="reward-content text-center">
+          <div class="reward-icon-lg mb-3">🏆</div>
+          <h5 class="reward-title-modal mb-2">ما شاء الله! لقد بلغت ١٠٠٠ رصيداً</h5>
+          <p class="reward-body">
+            "جَزَاءً مِن رَّبِّكَ عَطَاءً حِسَابًا"
+            <br><small class="text-muted">سورة النبأ – آية ٣٥</small>
+          </p>
+          <hr>
+          <p class="mt-3 reward-challenge">
+            <strong>الهدية الكبرى:</strong><br>
+            لقد أتممت الرحلة المباركة كاملة. حافظ على هذه الأعمال بعد رمضان، واستمر بالدعاء والصلاة والتلاوة.
+            نسأل الله أن يتقبل منك ويثبتك على الطاعة.
+          </p>
+        </div>
+      `,
+        },
     ];
 
     /**
