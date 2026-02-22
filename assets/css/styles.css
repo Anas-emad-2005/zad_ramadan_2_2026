@@ -1,0 +1,1057 @@
+/* ============================================================
+   styles.css – زاد رمضان
+   Color System (60-30-10):
+     60% Primary   → --color-primary   (soft teal #4A9B8F variants)
+     30% Secondary → --color-secondary (warm sand/beige)
+     10% Accent    → --color-accent    (golden amber – buttons, hovers, progress)
+   ============================================================ */
+
+/* ── Google Font ──────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap');
+
+/* ── Design Tokens ────────────────────────────────────────── */
+:root {
+    /* Primary – teal family */
+    --color-primary-dark: #2d756a;
+    --color-primary: #3d8c80;
+    --color-primary-mid: #4fa596;
+    --color-primary-light: #d4ede9;
+    --color-primary-xlight: #edf6f5;
+
+    /* Secondary – sand/beige family */
+    --color-secondary-dark: #b8a98c;
+    --color-secondary: #d4c4a8;
+    --color-secondary-light: #f0e8d8;
+    --color-secondary-xlight: #faf6ef;
+
+    /* Accent – amber (buttons, highlights, 10%) */
+    --color-accent: #c8943a;
+    --color-accent-light: #e8b865;
+    --color-accent-xlight: #fdf3e0;
+
+    /* Neutral */
+    --color-dark: #1e2a28;
+    --color-text-base: #2a3835;
+    --color-text-muted: #6b7c79;
+    --color-text-light: #98b0ac;
+    --color-white: #ffffff;
+    --color-surface: #f5faf9;
+    --color-border: #cde4e0;
+
+    /* Typography */
+    --font-main: 'Cairo', sans-serif;
+    --font-size-base: clamp(0.95rem, 1vw + 0.5rem, 1.05rem);
+    --font-size-sm: clamp(0.8rem, 0.85vw + 0.4rem, 0.9rem);
+    --font-size-lg: clamp(1.05rem, 1.2vw + 0.55rem, 1.2rem);
+    --line-height-base: 1.9;
+    --line-height-tight: 1.5;
+
+    /* Spacing */
+    --section-gap: clamp(3rem, 6vw, 5rem);
+
+    /* Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-xl: 2rem;
+
+    /* Shadow */
+    --shadow-sm: 0 2px 8px rgba(45, 117, 106, 0.08);
+    --shadow-md: 0 4px 20px rgba(45, 117, 106, 0.12);
+    --shadow-lg: 0 8px 40px rgba(45, 117, 106, 0.15);
+
+    /* Transitions */
+    --transition-fast: 0.18s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* ── Reset / Base ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-base);
+    background: var(--color-surface);
+    direction: rtl;
+    text-align: right;
+    margin: 0;
+    overflow-x: hidden;
+    /* Sticky footer layout */
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+/* Main content wrapper to push footer down */
+body > nav,
+body > section {
+    flex-shrink: 0;
+}
+
+/* Footer stays at bottom */
+body > footer {
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-primary-xlight);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary-mid);
+    border-radius: 3px;
+}
+
+/*
+ * Hide the built‑in adhkar accordion bodies.  In the updated design
+ * the actual lists are displayed in a modal when the user taps on
+ * "أذكار الصباح"، "أذكار المساء" أو "أذكار النوم".  Leaving the
+ * collapsed accordion in the DOM keeps Bootstrap happy but we never
+ * want its contents to be visible in the page.  The class
+ * `.d-none` alone is insufficient because Bootstrap’s
+ * `.accordion-collapse` styles override the display property.  This
+ * rule forces the hidden panels to remain hidden at all times.
+ */
+.accordion-collapse.d-none {
+    display: none !important;
+}
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.navbar-zad {
+    background: rgba(45, 117, 106, 0.97);
+    backdrop-filter: blur(10px);
+    /* Reduce vertical padding to shrink navbar height */
+    padding-block: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-brand-zad {
+    /* Slightly smaller brand font to save space */
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-white) !important;
+    letter-spacing: 0.02em;
+}
+
+.navbar-brand-zad span {
+    color: var(--color-accent-light);
+}
+
+.nav-link-zad {
+    color: rgba(255, 255, 255, 0.82) !important;
+    /* Reduce nav link font size for a slimmer nav bar */
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding-block: 0.35rem !important;
+    transition: color var(--transition-fast);
+}
+
+.nav-link-zad:hover {
+    color: var(--color-white) !important;
+}
+
+/* Gift button in nav */
+.btn-gift {
+    background: var(--color-accent);
+    color: var(--color-white);
+    border: none;
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-gift:hover {
+    background: var(--color-accent-light);
+    transform: translateY(-1px);
+    color: var(--color-white);
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+#hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=1800&q=80') center center / cover no-repeat;
+    transition: background-position 0.1s linear;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg,
+            rgba(30, 60, 55, 0.78) 0%,
+            rgba(45, 117, 106, 0.65) 50%,
+            rgba(20, 40, 36, 0.82) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem 1rem;
+    animation: fadeInUp 1s ease both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-title {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900;
+    color: var(--color-white);
+    line-height: clamp(1.15, 1.2vw, 1.2);
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    letter-spacing: 0.04em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.hero-title .accent {
+    color: var(--color-accent-light);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: clamp(1.7, 2vw, 1.85);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 0.5rem;
+}
+
+.hero-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    padding: 0.5rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+/* ── Section Wrapper ──────────────────────────────────────── */
+.section-block {
+    padding-block: var(--section-gap);
+}
+
+.section-block-alt {
+    background: var(--color-secondary-xlight);
+}
+
+.section-title {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.4rem;
+    line-height: var(--line-height-tight);
+    position: relative;
+    display: inline-block;
+    letter-spacing: -0.01em;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50%;
+    height: 3px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin-top: 0.4rem;
+    margin-right: 0;
+}
+
+.section-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: 2rem;
+    line-height: var(--line-height-base);
+}
+
+/* ── Daily Content Cards ──────────────────────────────────── */
+.content-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    height: 100%;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+.content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.content-card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.content-card-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.aya-text {
+    font-size: clamp(1.05rem, 1.5vw + 0.5rem, 1.25rem);
+    font-weight: 600;
+    color: var(--color-text-base);
+    line-height: 2;
+}
+
+.aya-source {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 0.6rem;
+    font-weight: 500;
+}
+
+.dhikr-text {
+    font-size: clamp(0.98rem, 1.2vw + 0.5rem, 1.1rem);
+    font-weight: 600;
+    color: var(--color-text-base);
+    line-height: 1.9;
+}
+
+.dhikr-count {
+    display: inline-block;
+    background: var(--color-accent-xlight);
+    color: var(--color-accent);
+    border: 1px solid rgba(200, 148, 58, 0.25);
+    padding: 0.2rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: 0.6rem;
+}
+
+.reminder-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-base);
+    line-height: var(--line-height-base);
+}
+
+/* ── Scoreboard ───────────────────────────────────────────── */
+.scoreboard {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+    color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+}
+
+.score-main-number {
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-white);
+}
+
+.score-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 400;
+}
+
+.level-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Progress bar */
+.progress-zad {
+    height: 10px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.progress-bar-zad {
+    background: linear-gradient(90deg, var(--color-accent-light), var(--color-accent));
+    border-radius: 100px;
+    transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 0.7rem;
+    line-height: 10px;
+    color: transparent;
+}
+
+/* Streak */
+.streak-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-md);
+}
+
+.streak-number {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--color-accent-light);
+}
+
+.streak-text {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.2;
+}
+
+/* SVG circle */
+.progress-circle-svg {
+    transform: rotate(-90deg);
+}
+
+.circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 7;
+}
+
+.circle-fill {
+    fill: none;
+    stroke: var(--color-accent-light);
+    stroke-width: 7;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.circle-label {
+    font-size: 1rem;
+    font-weight: 800;
+    fill: var(--color-white);
+}
+
+/* Streak break banner */
+.streak-break-banner {
+    background: var(--color-accent-xlight);
+    border: 1px solid rgba(200, 148, 58, 0.3);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.25rem;
+    color: var(--color-accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+/* ── Tasks ────────────────────────────────────────────────── */
+.task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.85rem;
+    transition: background var(--transition-normal), border-color var(--transition-normal),
+        transform var(--transition-fast), box-shadow var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+}
+
+.task-card:hover:not(.task-done) {
+    transform: translateX(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-mid);
+}
+
+.task-done {
+    background: var(--color-primary-xlight);
+    border-color: var(--color-primary-light);
+    opacity: 0.82;
+}
+
+.task-icon {
+    font-size: 1.5rem;
+}
+
+.task-label {
+    font-size: clamp(0.9rem, 1.1vw + 0.45rem, 1rem);
+    font-weight: 600;
+    color: var(--color-text-base);
+}
+
+.task-done .task-label {
+    color: var(--color-primary-dark);
+    text-decoration: line-through;
+    text-decoration-color: var(--color-primary);
+}
+
+.task-points-badge {
+    background: var(--color-accent-xlight);
+    color: var(--color-accent);
+    border: 1px solid rgba(200, 148, 58, 0.2);
+    padding: 0.18rem 0.65rem;
+    border-radius: 100px;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.task-btn {
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 1.1rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+    min-width: 80px;
+}
+
+.task-btn-active {
+    background: var(--color-accent);
+    color: var(--color-white);
+}
+
+.task-btn-active:hover:not(:disabled) {
+    background: var(--color-accent-light);
+    transform: scale(1.04);
+}
+
+.task-btn-done {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    cursor: default;
+}
+
+/* ── Adhkar Accordion ─────────────────────────────────────── */
+.accordion-zad .accordion-button {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    background: var(--color-primary-xlight);
+    border-radius: var(--radius-md) !important;
+    padding: 1rem 1.25rem;
+}
+
+.accordion-zad .accordion-button:not(.collapsed) {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    box-shadow: none;
+}
+
+.accordion-zad .accordion-button::after {
+    filter: invert(30%) sepia(40%) saturate(600%) hue-rotate(135deg);
+}
+
+.accordion-zad .accordion-body {
+    padding: 1rem 0.5rem;
+}
+
+.adhkar-item {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    transition: border-color var(--transition-fast);
+}
+
+.adhkar-item:hover {
+    border-color: var(--color-primary-mid);
+}
+
+.adhkar-num {
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.adhkar-item-text {
+    font-size: clamp(0.9rem, 1vw + 0.45rem, 1rem);
+    font-weight: 600;
+    color: var(--color-text-base);
+    line-height: var(--line-height-base);
+}
+
+.adhkar-count-badge {
+    background: var(--color-accent-xlight);
+    color: var(--color-accent);
+    border: 1px solid rgba(200, 148, 58, 0.2);
+    font-family: var(--font-main);
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 100px;
+}
+
+/* ── Charity Cards ────────────────────────────────────────── */
+.charity-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    transition: background var(--transition-normal), border-color var(--transition-normal),
+        transform var(--transition-fast);
+}
+
+.charity-card:hover {
+    background: var(--color-primary-xlight);
+    border-color: var(--color-primary-mid);
+    transform: translateY(-3px);
+}
+
+.charity-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.charity-text {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-text-base);
+    line-height: 1.6;
+}
+
+/* ── Rewards Grid ─────────────────────────────────────────── */
+.reward-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal),
+        border-color var(--transition-normal);
+    cursor: default;
+}
+
+.reward-unlocked {
+    border-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.reward-unlocked:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.reward-locked {
+    filter: grayscale(0.5);
+    opacity: 0.6;
+}
+
+.reward-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.reward-threshold {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.04em;
+}
+
+.reward-title-card {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-base);
+}
+
+.reward-unlocked .reward-title-card {
+    color: var(--color-accent);
+}
+
+/* Reward modal content */
+.reward-icon-lg {
+    font-size: 4rem;
+    line-height: 1;
+}
+
+.reward-title-modal {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-primary-dark);
+}
+
+.reward-body {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text-base);
+    line-height: 1.85;
+}
+
+.reward-challenge {
+    font-size: 0.95rem;
+    color: var(--color-text-base);
+    line-height: 1.75;
+    background: var(--color-primary-xlight);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+}
+
+/* ── Modals ───────────────────────────────────────────────── */
+.modal-content {
+    font-family: var(--font-main);
+    border-radius: var(--radius-lg);
+    border: none;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-primary-xlight);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.modal-title {
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    font-family: var(--font-main);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--color-border);
+}
+
+/* Gift modal */
+.gift-modal-body {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-base);
+    line-height: 1.9;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.gift-modal-icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+/* ── Toast Container & Custom Toast ─────────────────────────── */
+#toast-container {
+    position: fixed;
+    bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: min(92vw, 380px);
+    pointer-events: none;
+    padding: 0 1rem;
+}
+
+.zad-toast {
+    pointer-events: auto;
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+    /* no transition by default – driven by keyframes */
+}
+
+@keyframes toastEnter {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toastLeave {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+    }
+}
+
+.zad-toast-show {
+    animation: toastEnter 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.zad-toast-hide {
+    animation: toastLeave 0.2s ease-out forwards;
+}
+
+.toast-success {
+    background: #1e6b5e;
+    color: #fff;
+}
+
+.toast-info {
+    background: #3a5f7a;
+    color: #fff;
+}
+
+.toast-warning {
+    background: var(--color-accent);
+    color: #fff;
+}
+
+.zad-toast-msg {
+    display: block;
+    text-align: center;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.footer-zad {
+    background: var(--color-primary-dark);
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    padding: 1.75rem 1rem;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.footer-zad .footer-brand {
+    color: var(--color-accent-light);
+    font-weight: 700;
+}
+
+/* ── Adhkar inline display ──────────────────────────────── */
+/* Container for the adhkar list rendered when a user selects
+ * morning, evening or sleep adhkar.  Initially hidden via
+ * .d-none; becomes visible when populated.  We add gentle
+ * padding and shadow to set it apart from the accordion. */
+.adhkar-display {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+}
+.adhkar-display-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* ── Utilities ────────────────────────────────────────────── */
+.btn-primary-zad {
+    background: var(--color-accent);
+    color: var(--color-white);
+    border: none;
+    font-family: var(--font-main);
+    font-weight: 600;
+    padding: 0.55rem 1.5rem;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-primary-zad:hover {
+    background: var(--color-accent-light);
+    color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+.divider-line {
+    height: 1px;
+    background: var(--color-border);
+    margin: 0;
+}
+
+/* ── Responsive: Mobile-first ────────────────────────────── */
+@media (max-width: 576px) {
+    .task-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .task-meta {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .task-btn {
+        flex-shrink: 0;
+        min-width: auto;
+        padding: 0.35rem 0.9rem;
+    }
+
+    .scoreboard {
+        padding: 1.5rem clamp(0.75rem, 3vw, 1rem);
+    }
+
+    .score-main-number {
+        font-size: clamp(2.8rem, 10vw, 4rem);
+    }
+
+    .content-card {
+        padding: 1.25rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.2rem, 8vw, 3.2rem);
+        padding: 0 0.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1rem, 3.5vw, 1.2rem);
+        padding: 0 0.75rem;
+    }
+
+    .section-title {
+        font-size: clamp(1.25rem, 5vw, 1.6rem);
+    }
+
+    .adhkar-item {
+        padding: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .charity-card {
+        padding: 0.85rem;
+        flex-wrap: wrap;
+    }
+
+    .reward-card {
+        padding: 1rem 0.6rem;
+    }
+
+    .reward-icon {
+        font-size: 2rem;
+    }
+
+    #toast-container {
+        width: calc(100vw - 2rem);
+        left: 1rem;
+        transform: none;
+        bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+    }
+}
+
+@media (max-width: 768px) {
+    .scoreboard {
+        padding: 1.75rem 1.25rem;
+    }
+}
+
+/* Prevent any horizontal overflow */
+* {
+    max-width: 100%;
+}
+
+.container,
+.container-fluid {
+    max-width: 100%;
+    padding-left: clamp(0.75rem, 2vw, 1rem);
+    padding-right: clamp(0.75rem, 2vw, 1rem);
+}
+
+/* Ensure no horizontal scroll */
+html,
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+img,
+video,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ── Animation: fade in sections on scroll ──────────────────── */
+.fade-section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

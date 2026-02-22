@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="زاد رمضان – تطبيق رمضاني يومي للتعبد والأذكار وتتبع العبادات" />
+    <meta name="theme-color" content="#2d756a" />
+    <title>زاد رمضان</title>
+
+    <!-- Bootstrap 5 RTL CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet"
+        integrity="sha384-dpuaG1suU0eT09tx937/LVZImvkdn21eq3uT7M9Iymhr8sf8kx1Y5sUqEhxMaay" crossorigin="anonymous" />
+
+    <!-- Tailwind CSS (visual polish only) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+
+<body>
+
+    <!-- ══════════════════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════════════════ -->
+    <nav class="navbar navbar-zad navbar-expand-lg" aria-label="التنقل الرئيسي">
+        <div class="container">
+            <a class="navbar-brand-zad" href="#hero">
+                🌙 <span>زاد</span> رمضان
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
+                aria-controls="navMain" aria-expanded="false" aria-label="فتح القائمة">
+                <span class="navbar-toggler-icon" style="filter:invert(1);"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link-zad nav-link" href="#daily">المحتوى اليومي</a></li>
+                    <li class="nav-item"><a class="nav-link-zad nav-link" href="#adhkar">الأذكار</a></li>
+                    <li class="nav-item"><a class="nav-link-zad nav-link" href="#charity">صدقة جارية</a></li>
+                    <li class="nav-item"><a class="nav-link-zad nav-link" href="#tasks">العبادات اليومية</a></li>
+                    <li class="nav-item"><a class="nav-link-zad nav-link" href="#rewards">الجوائز</a></li>
+                </ul>
+                <button id="gift-btn" class="btn btn-gift" aria-label="إهداء">
+                    🎁 إهداء
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════ -->
+    <section id="hero" aria-label="الصفحة الرئيسية">
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <div class="hero-date-badge">
+                🗓️ <span id="hero-date">رمضان المبارك</span>
+            </div>
+            <h1 class="hero-title">
+                زاد <span class="accent">رمضان</span>
+            </h1>
+            <p class="hero-subtitle">
+                يومٌ في رمضان لا يُقارن — اجعله يومَ خيرٍ وعبادةٍ وقربٍ من الله
+            </p>
+            <a href="#tasks" class="btn-primary-zad btn">
+                ابدأ يومك ←
+            </a>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     SCOREBOARD
+══════════════════════════════════════════════════════════ -->
+    <section id="scoreboard" class="section-block fade-section">
+        <div class="container">
+            <div class="scoreboard">
+                <div class="row align-items-center gy-4">
+
+                    <!-- Points & level -->
+                    <div class="col-12 col-md-5">
+                        <p class="score-label mb-1">إجمالي رصيدك</p>
+                        <div class="d-flex align-items-end gap-2 mb-2">
+                            <span id="total-points" class="score-main-number">0</span>
+                            <span class="score-label mb-2">نقطة</span>
+                        </div>
+                        <span id="level-label" class="level-badge">بداية طيبة</span>
+
+                        <!-- Streak break banner -->
+                        <div id="streak-break-banner" class="streak-break-banner d-none">
+                            ⚠️ انقطع التسلسل — لا بأس، ابدأ من جديد اليوم بنية صادقة.
+                        </div>
+                    </div>
+
+                    <!-- Progress bar + streak -->
+                    <div class="col-12 col-md-4">
+                        <p class="score-label mb-2">مستوى التقدم</p>
+                        <div class="progress-zad mb-3" role="progressbar" aria-label="شريط التقدم" aria-valuenow="0"
+                            aria-valuemin="0" aria-valuemax="100">
+                            <div id="progress-bar" class="progress-bar-zad" style="width:0%">0%</div>
+                        </div>
+
+                        <div class="streak-display">
+                            <span>🔥</span>
+                            <div>
+                                <div class="streak-number" id="streak-count">0</div>
+                                <div class="streak-text">
+                                    <span id="streak-suffix">أيام</span> متواصلة
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Circle progress -->
+                    <div class="col-12 col-md-3 text-center">
+                        <svg class="progress-circle-svg" width="100" height="100" viewBox="0 0 100 100"
+                            aria-hidden="true">
+                            <circle class="circle-bg" cx="50" cy="50" r="42" />
+                            <circle id="progress-circle-fill" class="circle-fill" cx="50" cy="50" r="42"
+                                stroke-dasharray="263.89" stroke-dashoffset="263.89" />
+                            <text class="circle-label" x="50" y="54" text-anchor="middle" dominant-baseline="middle"
+                                id="circle-pct" style="transform:rotate(90deg);transform-origin:50% 50%">0%</text>
+                        </svg>
+                        <p class="score-label mt-2" style="font-size:0.78rem;">من الهدف ٢٥٠</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     DAILY CONTENT
+══════════════════════════════════════════════════════════ -->
+    <section id="daily" class="section-block section-block-alt fade-section">
+        <div class="container">
+            <h2 class="section-title">المحتوى اليومي</h2>
+            <p class="section-subtitle">آيات وأذكار ومذكّرات يومية مختارة</p>
+
+            <div class="row gy-4">
+                <!-- آية اليوم -->
+                <div class="col-12 col-md-4">
+                    <article class="content-card h-100" aria-label="آية اليوم">
+                        <span class="content-card-icon">📖</span>
+                        <p class="content-card-label">آية اليوم</p>
+                        <p id="aya-text" class="aya-text"></p>
+                        <p id="aya-source" class="aya-source"></p>
+                    </article>
+                </div>
+
+                <!-- ذكر اليوم -->
+                <div class="col-12 col-md-4">
+                    <article class="content-card h-100" aria-label="ذكر اليوم">
+                        <span class="content-card-icon">📿</span>
+                        <p class="content-card-label">ذكر اليوم</p>
+                        <p id="dhikr-text" class="dhikr-text"></p>
+                        <span id="dhikr-count" class="dhikr-count"></span>
+                    </article>
+                </div>
+
+                <!-- تذكير اليوم -->
+                <div class="col-12 col-md-4">
+                    <article class="content-card h-100" aria-label="تذكير اليوم">
+                        <span class="content-card-icon">💡</span>
+                        <p class="content-card-label">تذكير اليوم</p>
+                        <p id="reminder-text" class="reminder-text"></p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     ADHKAR ACCORDION
+══════════════════════════════════════════════════════════ -->
+    <section id="adhkar" class="section-block fade-section">
+        <div class="container">
+            <h2 class="section-title">الأذكار</h2>
+            <p class="section-subtitle">أذكار الصباح والمساء والنوم — أصيلة ومختصرة</p>
+
+            <!-- Display container for selected adhkar list.  When the
+                 user taps on "أذكار الصباح" أو "أذكار المساء" أو
+                 "أذكار النوم", the corresponding list will be
+                 rendered inside this div.  Initially empty. -->
+            <div id="adhkar-display" class="adhkar-display d-none"></div>
+
+            <div class="accordion accordion-zad" id="adhkar-accordion">
+
+                <!-- أذكار الصباح -->
+                <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+                    <h3 class="accordion-header">
+                        <!-- Trigger for morning adhkar modal -->
+                        <button class="accordion-button adhkar-trigger" type="button" data-category="morning">
+                            🌅 أذكار الصباح
+                        </button>
+                    </h3>
+                    <!-- Hide inline list; contents will be shown in a modal -->
+                    <div id="collapseMorning" class="accordion-collapse d-none">
+                        <div class="accordion-body" id="morning-adhkar-list"></div>
+                    </div>
+                </div>
+
+                <!-- أذكار المساء -->
+                <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+                    <h3 class="accordion-header">
+                        <!-- Trigger for evening adhkar modal -->
+                        <button class="accordion-button adhkar-trigger collapsed" type="button" data-category="evening">
+                            🌇 أذكار المساء
+                        </button>
+                    </h3>
+                    <!-- Hide inline list; contents will be shown in a modal -->
+                    <div id="collapseEvening" class="accordion-collapse d-none">
+                        <div class="accordion-body" id="evening-adhkar-list"></div>
+                    </div>
+                </div>
+
+                <!-- أذكار النوم -->
+                <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+                    <h3 class="accordion-header">
+                        <!-- Trigger for sleep adhkar modal -->
+                        <button class="accordion-button adhkar-trigger collapsed" type="button" data-category="sleep">
+                            🌙 أذكار النوم
+                        </button>
+                    </h3>
+                    <!-- Hide inline list; contents will be shown in a modal -->
+                    <div id="collapseSleep" class="accordion-collapse d-none">
+                        <div class="accordion-body" id="sleep-adhkar-list"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     CHARITY IDEAS
+══════════════════════════════════════════════════════════ -->
+    <section id="charity" class="section-block section-block-alt fade-section">
+        <div class="container">
+            <h2 class="section-title">أفكار صدقة جارية</h2>
+            <p class="section-subtitle">أعمالٌ يبقى أجرها بعد الممات — اختر ما تيسّر</p>
+
+            <div class="row gy-3" id="charity-list">
+                <!-- Populated by app.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     DAILY TASKS
+══════════════════════════════════════════════════════════ -->
+    <section id="tasks" class="section-block fade-section">
+        <div class="container">
+            <div class="row align-items-start gy-4">
+
+                <div class="col-12 col-lg-7">
+                    <h2 class="section-title">العبادات اليومية</h2>
+                    <p class="section-subtitle">
+                        رصيدك: <span class="fw-bold" style="color:var(--color-accent)"
+                            id="tasks-points-display">0</span> نقطة
+                        &nbsp;|&nbsp; كمّل ٣ مهام على الأقل للحفاظ على التسلسل
+                    </p>
+
+                    <div id="tasks-container">
+                        <!-- Populated by app.js / renderTasks() -->
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-5">
+                    <div class="content-card">
+                        <span class="content-card-icon">🤲</span>
+                        <p class="content-card-label">دعاء اليوم</p>
+                        <p style="font-size:1rem;font-weight:600;line-height:1.9;">
+                            اللَّهُمَّ إِنَّكَ عَفُوٌّ كَرِيمٌ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي
+                        </p>
+                        <span class="dhikr-count">كثيراً في رمضان – لا سيما في العشر الأواخر</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     REWARDS
+══════════════════════════════════════════════════════════ -->
+    <section id="rewards" class="section-block section-block-alt fade-section">
+        <div class="container">
+            <h2 class="section-title">الجوائز</h2>
+            <p class="section-subtitle">اجمع رصيداً لفتح الجوائز — كل ٥٠ نقطة تُفتح جائزة جديدة</p>
+
+            <div class="row gy-3" id="rewards-grid">
+                <!-- Populated by app.js / renderRewards() -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     FOOTER (moved to end of document so it always appears last)
+══════════════════════════════════════════════════════════ -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+     TOAST CONTAINER
+══════════════════════════════════════════════════════════ -->
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+     MODAL: REWARD
+══════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="reward-modal" tabindex="-1" aria-labelledby="reward-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reward-modal-label">جائزتك</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                </div>
+                <div class="modal-body" id="reward-modal-body">
+                    <!-- Populated dynamically when a reward card is clicked -->
+                </div>
+                <!-- No footer button needed; close via the header button -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+     MODAL: GIFT (إهداء)
+══════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="gift-modal" tabindex="-1" aria-labelledby="gift-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gift-modal-label">🎁 إهداء</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                </div>
+                <div class="modal-body gift-modal-body">
+                    <span class="gift-modal-icon">🕌</span>
+                    <p>
+                        هذا العمل صدقةٌ جارية،<br>
+                        وأجرٌ مُهدى على روح موتى المسلمين جميعاً.<br>
+                        <small class="text-muted">اللهمَّ اجعله في ميزان حسناتهم.</small>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-primary-zad btn" data-bs-dismiss="modal">آمين 🤲</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+     MODAL: ADHKAR LIST
+══════════════════════════════════════════════════════════ -->
+    <!-- This modal shows the full list of adhkar for morning, evening, or sleep when triggered. -->
+    <div class="modal fade" id="adhkar-modal" tabindex="-1" aria-labelledby="adhkar-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adhkar-modal-label"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                </div>
+                <div class="modal-body" id="adhkar-modal-body">
+                    <!-- List items will be injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+     SCRIPTS (load order: storage → content → adhkar → rewards → app)
+══════════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmyKQ1E6lTtHFhBB5bEBW5qXEwk"
+        crossorigin="anonymous"></script>
+
+    <script src="./assets/js/storage.js"></script>
+    <script src="./assets/js/content.js"></script>
+    <script src="./assets/js/adhkar.js"></script>
+    <script src="./assets/js/rewards.js"></script>
+    <script src="./assets/js/app.js"></script>
+
+    <!-- Scroll-fade observer (inline is unavoidable for observers; logic is minimal) -->
+    <script>
+        // Intersection observer for .fade-section elements
+        const _fadeSections = document.querySelectorAll('.fade-section');
+        if ('IntersectionObserver' in window) {
+            const _obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); _obs.unobserve(e.target); } });
+            }, { threshold: 0.1 });
+            _fadeSections.forEach(s => _obs.observe(s));
+        } else {
+            _fadeSections.forEach(s => s.classList.add('visible'));
+        }
+
+        // Sync tasks section inline points display with main scoreboard
+        document.addEventListener('DOMContentLoaded', () => {
+            const pts = document.getElementById('total-points');
+            const tDisp = document.getElementById('tasks-points-display');
+            if (pts && tDisp) {
+                tDisp.textContent = pts.textContent;
+                const _observer = new MutationObserver(() => { tDisp.textContent = pts.textContent; });
+                _observer.observe(pts, { childList: true, characterData: true, subtree: true });
+            }
+
+            // Set hero date
+            const heroDate = document.getElementById('hero-date');
+            if (heroDate) {
+                const now = new Date();
+                const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+                heroDate.textContent = now.toLocaleDateString('ar-LY', opts);
+            }
+        });
+    </script>
+
+    <!-- Footer moved to very end of body to ensure it sits below all other
+         content.  This helps keep the footer at the bottom of the page
+         and avoids it appearing mid-way when modals or other elements
+         follow it in the DOM. -->
+    <footer class="footer-zad">
+        <p class="mb-0">
+            جميع الحقوق محفوظة &copy;
+            <span class="footer-brand">أنس عماد عبد الله</span>
+            — صُنع بحبٍّ في رمضان المبارك 🌙
+        </p>
+    </footer>
+
+</body>
+
+</html>
