@@ -24,13 +24,87 @@
    CONSTANTS
 ════════════════════════════════════════════════════════════ */
 
-const TASKS = [
-    { id: 'quran', label: 'قراءة القرآن', icon: '📖', points: 10 },
-    { id: 'adhkar', label: 'أذكار', icon: '📿', points: 5 },
-    { id: 'sadaqa', label: 'صدقة', icon: '🤲', points: 15 },
-    { id: 'qiyam', label: 'قيام الليل', icon: '🌙', points: 20 },
-    { id: 'amal', label: 'عمل صالح', icon: '✨', points: 10 },
+/*
+ * We expose a much larger pool of potential daily tasks (30 in total) and
+ * randomly select a smaller subset to present to the user each day.  This
+ * prevents repetition and keeps the experience fresh over the course of
+ * Ramadan.  The selection is keyed by date so that reloading the page on
+ * the same day will always show the same set of tasks, but a new set is
+ * generated on subsequent days.  Each task has a unique id, an Arabic
+ * label, an icon emoji and an associated points value.
+ */
+const ALL_TASKS = [
+    { id: 'task1',  label: 'قراءة جزء من القرآن',       icon: '📖', points: 10 },
+    { id: 'task2',  label: 'الدعاء للوالدين',            icon: '🤲', points: 5  },
+    { id: 'task3',  label: 'الصدقة اليومية',             icon: '💰', points: 15 },
+    { id: 'task4',  label: 'صلاة الضحى',                 icon: '🌅', points: 10 },
+    { id: 'task5',  label: 'صلاة التهجد',                icon: '🌙', points: 20 },
+    { id: 'task6',  label: 'قراءة تفسير آية',            icon: '📚', points: 10 },
+    { id: 'task7',  label: 'صلة الرحم',                 icon: '👪', points: 15 },
+    { id: 'task8',  label: 'التسبيح والتحميد',            icon: '✨', points: 5  },
+    { id: 'task9',  label: 'الصلاة على النبي ﷺ',          icon: '🕌', points: 5  },
+    { id: 'task10', label: 'تحفيظ آية لطفل',             icon: '👶', points: 10 },
+    { id: 'task11', label: 'حفظ حديث',                  icon: '💬', points: 10 },
+    { id: 'task12', label: 'تدبر سورة قصيرة',             icon: '📘', points: 10 },
+    { id: 'task13', label: 'قراءة أذكار الصباح',          icon: '🌤️', points: 5  },
+    { id: 'task14', label: 'قراءة أذكار المساء',          icon: '🌇', points: 5  },
+    { id: 'task15', label: 'دعاء الاستغفار',             icon: '🕊', points: 5  },
+    { id: 'task16', label: 'صلاة الوتر',                icon: '🏹', points: 15 },
+    { id: 'task17', label: 'ذكر الله خلال العمل',        icon: '⚙️', points: 5  },
+    { id: 'task18', label: 'تسبيحات بعد الصلاة',          icon: '👐', points: 5  },
+    { id: 'task19', label: 'صدقة سرية',                 icon: '🙌', points: 15 },
+    { id: 'task20', label: 'تعليم شخص شيئاً نافعاً',       icon: '📖', points: 10 },
+    { id: 'task21', label: 'المحافظة على الوضوء',        icon: '🚿', points: 5  },
+    { id: 'task22', label: 'إهداء كتاب ديني',            icon: '🎁', points: 15 },
+    { id: 'task23', label: 'قراءة سيرة النبي ﷺ',          icon: '📜', points: 10 },
+    { id: 'task24', label: 'مساعدة فقير',               icon: '🫂', points: 15 },
+    { id: 'task25', label: 'الابتسامة في وجه الناس',       icon: '😊', points: 5  },
+    { id: 'task26', label: 'كفالة يتيم',                 icon: '🧒', points: 20 },
+    { id: 'task27', label: 'تنظيف المسجد',               icon: '🧹', points: 10 },
+    { id: 'task28', label: 'قراءة ذكر النوم',             icon: '🛏️', points: 5  },
+    { id: 'task29', label: 'قيام الليل',                icon: '🌌', points: 20 },
+    { id: 'task30', label: 'التصدق بوقت لعمل تطوعي',      icon: '⏰', points: 15 },
 ];
+
+// Number of tasks to display each day.  The UI was designed for five tasks,
+// so we select five from the pool each day.
+const NUM_DAILY_TASKS = 5;
+
+// Prefix used to persist the randomly selected task IDs in localStorage.
+const DAILY_SELECTION_KEY_PREFIX = 'zad_daily_task_selection_';
+
+/**
+ * Returns the array of tasks for the current day.  It will either
+ * read an existing selection from localStorage or pick a fresh random
+ * subset of tasks from the ALL_TASKS pool and persist the IDs for
+ * tomorrow's loads.  This ensures tasks remain stable within the same
+ * day but vary across days.
+ */
+function getDailyTasks() {
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const storageKey = `${DAILY_SELECTION_KEY_PREFIX}${todayKey}`;
+    try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+            const ids = JSON.parse(stored);
+            const selected = ids
+                .map(id => ALL_TASKS.find(task => task.id === id))
+                .filter(Boolean);
+            // If for some reason stored IDs are invalid or empty, fall back to fresh selection.
+            if (selected.length === NUM_DAILY_TASKS) {
+                return selected;
+            }
+        }
+    } catch (err) {
+        // ignore parse errors and fall through to generate new tasks
+    }
+    // Generate a new random selection
+    const shuffled = ALL_TASKS.slice().sort(() => 0.5 - Math.random());
+    const chosen = shuffled.slice(0, NUM_DAILY_TASKS);
+    const ids = chosen.map(t => t.id);
+    localStorage.setItem(storageKey, JSON.stringify(ids));
+    return chosen;
+}
 
 const STREAK_THRESHOLD = 3; // min tasks to count as a completed day
 
@@ -319,7 +393,12 @@ function renderTasks() {
 
     const completedIDs = Storage.getCompletedTaskIDs();
 
-    container.innerHTML = TASKS.map(task => {
+    // Fetch the tasks for today from the dynamic daily pool rather than
+    // rendering the full static list.  This ensures variety between
+    // days while preserving the same set during a single day.
+    const todayTasks = getDailyTasks();
+
+    container.innerHTML = todayTasks.map(task => {
         const done = completedIDs.has(task.id);
         return `
       <div class="task-card ${done ? 'task-done' : ''}" id="task-card-${task.id}">
